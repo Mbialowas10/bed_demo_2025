@@ -22,5 +22,5 @@ jobs:
             node-version: "14"
         # install project dependencies
         - run: npm install
-        # run npm test script
+        # run npm test script again
         - run: npm test
