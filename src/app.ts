@@ -1,12 +1,19 @@
 // import the express application and type defintion
 import express, {Express} from "express"
 
+// import Morgan
+import morgan from "morgan"
+
+
 // import setupSwagger endpoint
 import setupSwagger from "../config/swagger"; 
 import { timeStamp } from "console";
 
 // initialize the express application
 const app:  Express = express();
+
+// integrate morgan into app
+app.use(morgan("combined"));
 
 // setup swagger for api documentation
 setupSwagger(app)
