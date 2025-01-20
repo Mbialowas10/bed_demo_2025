@@ -1,3 +1,9 @@
+// import morgan
+import morgan  from "morgan";
+
+// import itemRoutes
+import itemRoutes from "./api/v1/routes/itemRoutes";
+
 // import the express application and type defintion
 import express, {Express} from "express"
 
@@ -5,8 +11,16 @@ import express, {Express} from "express"
 import setupSwagger from "../config/swagger"; 
 import { timeStamp } from "console";
 
+
 // initialize the express application
 const app:  Express = express();
+
+// initialize morgan
+app.use(morgan("combined"));
+
+// ability to work with json request via body
+app.use(express.json());
+
 
 // setup swagger for api documentation
 setupSwagger(app)
@@ -52,6 +66,8 @@ app.get("/api/v1/health", (req, res) => {
   // end JSON response with status, server uptime, currenttimek, API version
 });
 
+// register itemRoutes
+app.use("/api/v1/items", itemRoutes)
 
 
 // export app and server for testing
