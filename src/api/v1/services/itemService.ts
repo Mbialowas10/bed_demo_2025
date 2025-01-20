@@ -30,3 +30,11 @@ export const updateItem = async(
     items[index] = {id, ...item };
     return items[index];
 };
+
+export const deleteItem = async(id: string): Promise<void> => {
+    const index: number = items.findIndex((i) => i.id === id);
+    if( index === -1 ){
+        throw new Error(`Item with ID ${id} not found`);
+    }
+    items.splice(index, 1);
+};
