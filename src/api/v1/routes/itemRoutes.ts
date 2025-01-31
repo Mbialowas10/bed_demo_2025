@@ -1,12 +1,16 @@
-import express, {Router} from "express";
-import * as itemController from "../controllers/itemController";
+import express from "express";
+import { validateRequest } from "../middleware/validate";
+import { itemSchema } from "../validations/itemValidation";
+import {
+	getAllItems,
+	createItem,
+	updateItem,
+	deleteItem,
+} from "../controllers/itemController";
 
-const router: Router = express.Router();
+const router = express.Router();
 
-
-router.get("/", itemController.getAllItems);
-router.post("/", itemController.createItem);
-router.put("/:id", itemController.updateItem);
-router.delete("/:id", itemController.deleteItem);
-
-export default router;
+router.get("/", getAllItems);
+router.post("/", validateRequest(itemSchema), createItem);
+router.put("/:id", validateRequest(itemSchema), updateItem);
+router.delete("/:id", deleteItem);
