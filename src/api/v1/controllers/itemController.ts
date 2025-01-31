@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as itemService from "../services/itemService";
-import type { Item } from "../services/itemService"
+import { Item } from "../models/itemModel"
+import { successResponse } from "../models/responseModel";
 
 
 export const getAllItems = async (
@@ -9,7 +10,7 @@ export const getAllItems = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const items: Item[] = await itemService.fetchAllItems();
+        const items: Item[] = await itemService.getAllItems();
         res.status(200).json({message: "Items retrieved", data: items});
     }catch(error){
         next(error);

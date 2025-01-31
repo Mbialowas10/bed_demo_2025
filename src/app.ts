@@ -10,7 +10,7 @@ import express, {Express} from "express"
 // import setupSwagger endpoint
 import setupSwagger from "../config/swagger"; 
 import { timeStamp } from "console";
-
+import errorHandler from "./api/v1/middleware/errorHandler";
 
 // initialize the express application
 const app:  Express = express();
@@ -20,7 +20,7 @@ app.use(morgan("combined"));
 
 // ability to work with json request via body
 app.use(express.json());
-
+app.use(errorHandler);
 
 // setup swagger for api documentation
 setupSwagger(app)

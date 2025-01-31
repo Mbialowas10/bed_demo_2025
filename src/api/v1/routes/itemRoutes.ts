@@ -14,3 +14,5 @@ router.get("/", getAllItems);
 router.post("/", validateRequest(itemSchema), createItem);
 router.put("/:id", validateRequest(itemSchema), updateItem);
 router.delete("/:id", deleteItem);
+
+export default router;
