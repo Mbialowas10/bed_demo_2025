@@ -1,40 +1,39 @@
-export type Item = {
-    id: string;
-    name: string;
-    description: string;
+import {Item} from "../models/itemModel"
+
+import {
+    createDocument,
+    getDocuments,
+    updateDocument,
+    deleteDocument
+} from "../respositories/firestoreRepository"
+
+
+const COLLECTION = "items"
+
+export const getAllItems = async() : Promise<Item[]> => {
+    const snapshot = await getDocuments(COLLECTION);
+    return snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {id:doc.id, ...data} as Item;
+    })
 };
 
-const items: Item[] = [];
 
-export const fetchAllItems = async() : Promise<Item[]> => {
-    return items;
+export const createItem = async (item: Partial<Item>): Promise<Item> => {
+	const id = await createDocument(COLLECTION, item);
+	return { id, ...item } as Item;
 };
 
-export const createItem = async( item: {
-    name:string;
-    description: string;
-}): Promise<Item> => {
-    const newItem: Item = { id: Date.now().toString(), ...item};
-    items.push(newItem);
-    return newItem;
+export const updateItem = async (
+	id: string,
+	item: Partial<Item>
+): Promise<Item> => {
+	await updateDocument(COLLECTION, id, item);
+	return { id, ...item } as Item;
 };
 
-export const updateItem = async(
-    id: string,
-    item: {name:string, description: string}
-) : Promise<Item> => {
-    const index: number = items.findIndex((i) => i.id === id);
-    if(index === -1){
-        throw new Error(`Item with ID ${id} not found`);
-    }
-    items[index] = {id, ...item };
-    return items[index];
-};
 
-export const deleteItem = async(id: string): Promise<void> => {
-    const index: number = items.findIndex((i) => i.id === id);
-    if( index === -1 ){
-        throw new Error(`Item with ID ${id} not found`);
-    }
-    items.splice(index, 1);
+
+export const deleteItem = async (id: string): Promise<void> => {
+	await deleteDocument(COLLECTION, id);
 };
