@@ -37,3 +37,4 @@ export const updateItem = async (
 export const deleteItem = async (id: string): Promise<void> => {
 	await deleteDocument(COLLECTION, id);
 };
+//
