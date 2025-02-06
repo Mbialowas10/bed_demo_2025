@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as itemService from "../services/itemService";
-import type { Item } from "../services/itemService"
+import type { Item } from "../models/itemModel"
+import { successResponse } from "../models/responseModel";
 
 
 export const getAllItems = async (
@@ -9,8 +10,11 @@ export const getAllItems = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const items: Item[] = await itemService.fetchAllItems();
-        res.status(200).json({message: "Items retrieved", data: items});
+        const items: Item[] = await itemService.getAllItems();
+        res.status(200).json(
+            successResponse(items, "Items retrieved sucessfully")
+        );
+
     }catch(error){
         next(error);
     }
@@ -23,7 +27,10 @@ export const createItem = async(
 ): Promise<void> => {
     try {
         const newItem: Item = await itemService.createItem(req.body);
-        res.status(201).json({message: "Item created", data: newItem});
+        res.status(201).json(
+    
+            successResponse(newItem, "Item created successfully")
+        );
     }catch(error){
         next(error);
     }
@@ -39,7 +46,9 @@ export const updateItem = async(
             req.params.id,
             req.body
         );
-        res.status(200).json({message: "Item updated", data: updatedItem});
+        res.status(200).json(
+            successResponse(updateItem, "Item updated successfully")
+        );
 
     }catch (error){
         next(error);
@@ -53,7 +62,9 @@ export const deleteItem = async(
 ): Promise<void> => {
     try{
         await itemService.deleteItem(req.params.id);
-        res.status(200).json({message: "Item deleted"});
+        res.status(200).json(
+           successResponse(null, "Item deleted successfully")
+        );
     }catch(error){
         next(error);
     }
