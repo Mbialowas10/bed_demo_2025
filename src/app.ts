@@ -11,6 +11,7 @@ import express, {Express} from "express"
 import setupSwagger from "../config/swagger"; 
 import { error, timeStamp } from "console";
 import errorHandler from "./api/v1/middleware/errorHandler";
+import userRoutes from "src/api/v1/routes/userRoutes";
 
 // initialize the express application
 const app:  Express = express();
@@ -24,6 +25,10 @@ app.use(errorHandler)
 
 // setup swagger for api documentation
 setupSwagger(app)
+
+
+
+
 
 // response to GET request at endpoint "/" with message
 app.get("/", (req,res) => {
@@ -69,6 +74,8 @@ app.get("/api/v1/health", (req, res) => {
 // register itemRoutes
 app.use("/api/v1/items", itemRoutes)
 
+// mount the user routes under /users
+app.use("/api/v1/users", userRoutes);
 
 // export app and server for testing
 export default app;
