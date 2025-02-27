@@ -11,7 +11,11 @@ import express, {Express} from "express"
 import setupSwagger from "../config/swagger"; 
 import { error, timeStamp } from "console";
 import errorHandler from "./api/v1/middleware/errorHandler";
-import userRoutes from "src/api/v1/routes/userRoutes";
+//import userRoutes from "./src/api/v1/routes/userRoutes";
+import userRoutes from "./api/v1/routes/userRoutes"
+
+// import the new adminRoutes
+import adminRoutes from "./api/v1/routes/adminRoutes"
 
 // initialize the express application
 const app:  Express = express();
@@ -76,6 +80,9 @@ app.use("/api/v1/items", itemRoutes)
 
 // mount the user routes under /users
 app.use("/api/v1/users", userRoutes);
+
+// Mount the admin routes under /admin
+app.use("/api/v1/admin", adminRoutes)
 
 // export app and server for testing
 export default app;
