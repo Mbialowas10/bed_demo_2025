@@ -1,4 +1,5 @@
 import request from "supertest";
+import { Request, Response, NextFunction } from "express";
 import app from "../src/app";
 import * as itemController from "../src/api/v1/controllers/itemController";
 
@@ -8,6 +9,17 @@ jest.mock("../src/api/v1/controllers/itemController", () => ({
 	updateItem: jest.fn((req, res) => res.status(200).send()),
 	deleteItem: jest.fn((req, res) => res.status(200).send()),
 }));
+
+
+jest.mock("../src/api/v1/middleware/authenticate", () => {
+	return jest.fn((req: Request, res: Response, next: NextFunction) => next());
+});
+jest.mock("../src/api/v1/middleware/authorize", () => {
+	return jest.fn(
+		(options) => (req: Request, res: Response, next: NextFunction) => next()
+	);
+});
+
 describe("Items Routes", () => {
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -15,7 +27,8 @@ describe("Items Routes", () => {
 
 	describe("GET /api/v1/items", () => {
 		it("should call getAllItems controller", async () => {
-			await request(app).get("/api/v1/items");
+			await request(app).get("/api/v1/items")
+			.set("Authorization","Bearer mockedTOken");
 			expect(itemController.getAllItems).toHaveBeenCalled();
 		});
 	});
@@ -26,7 +39,9 @@ describe("Items Routes", () => {
 				name: "Test Item",
 				description: "Test Description",
 			};
-			await request(app).post("/api/v1/items").send(mockItem);
+			await request(app).post("/api/v1/items")
+			.set("Authorization","Bearer mockedTOken")
+			.send(mockItem);
 			expect(itemController.createItem).toHaveBeenCalled();
 		});
 	});
@@ -37,15 +52,19 @@ describe("Items Routes", () => {
 				name: "Updated Item",
 				description: "Updated Description",
 			};
-			await request(app).put("/api/v1/items/1").send(mockItem);
+			await request(app).put("/api/v1/items/1")
+			.set("Authorization","Bearer mockedTOken")
+			.send(mockItem);
 			expect(itemController.updateItem).toHaveBeenCalled();
 		});
 	});
 
 	describe("DELETE /api/v1/items/:id", () => {
 		it("should call deleteItem controller", async () => {
-			await request(app).delete("/api/v1/items/1");
+			await request(app).delete("/api/v1/items/1")
+			.set("Authorization","Bearer mockedTOken");
 			expect(itemController.deleteItem).toHaveBeenCalled();
 		});
 	});
+
 });

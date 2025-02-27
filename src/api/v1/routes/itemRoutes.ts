@@ -16,6 +16,7 @@ const router: Router = express.Router();
 
 
 router.get("/", authenticate, getAllItems);
+//router.get("/", getAllItems)
 
 router.post(
 	"/", // /items 

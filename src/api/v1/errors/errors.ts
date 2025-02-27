@@ -92,7 +92,6 @@ class AuthenticationError extends Error {
     }
 }
 
-export { AuthenticationError };
 
 const FORBIDDEN: number = 403;
 
@@ -119,5 +118,5 @@ class AuthorizationError extends Error {
     }
 }
 
-export { AuthorizationError };
+export { AuthenticationError , AuthorizationError };
 

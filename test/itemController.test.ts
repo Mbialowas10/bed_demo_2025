@@ -20,7 +20,7 @@ describe("getAllItems", () => {
 		const mockItems = [
 			{ id: "1", name: "Test Item", description: "Test Description" },
 		];
-		(itemService.fetchAllItems as jest.Mock).mockResolvedValue(mockItems);
+		(itemService.getAllItems as jest.Mock).mockResolvedValue(mockItems);
 
 		await itemController.getAllItems(
 			mockReq as Request,
@@ -30,7 +30,7 @@ describe("getAllItems", () => {
 
 		expect(mockRes.status).toHaveBeenCalledWith(200);
 		expect(mockRes.json).toHaveBeenCalledWith({
-			message: "Items retrieved",
+			message: "Items retrieved sucessfully",
 			data: mockItems,
 		});
 	});
