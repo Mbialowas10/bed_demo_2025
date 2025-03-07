@@ -27,7 +27,8 @@ describe("Items Routes", () => {
 
 	describe("GET /api/v1/items", () => {
 		it("should call getAllItems controller", async () => {
-			await request(app).get("/api/v1/items")
+			await request(app)
+			.get("/api/v1/items")
 			.set("Authorization", "Bearer mockedToken");
 			expect(itemController.getAllItems).toHaveBeenCalled();
 		});
@@ -39,7 +40,8 @@ describe("Items Routes", () => {
 				name: "Test Item",
 				description: "Test Description",
 			};
-			await request(app).post("/api/v1/items")
+			await request(app)
+			.post("/api/v1/items")
 			.set("Authorization", "Bearer mockedToken")
 			.send(mockItem);
 			expect(itemController.createItem).toHaveBeenCalled();
@@ -52,7 +54,8 @@ describe("Items Routes", () => {
 				name: "Updated Item",
 				description: "Updated Description",
 			};
-			await request(app).put("/api/v1/items/1")
+			await request(app)
+			.put("/api/v1/items/1")
 			.set("Authorization", "Bearer mockedToken")
 			.send(mockItem);
 			expect(itemController.updateItem).toHaveBeenCalled();

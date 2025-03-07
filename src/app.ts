@@ -1,5 +1,18 @@
+
+import helmet from "helmet";
+// import env 
+import dotenv from "dotenv"
+
+// cors
+import cors from "cors";
+
+
+dotenv.config()
+
 // import morgan
 import morgan  from "morgan";
+
+
 
 // import itemRoutes
 import itemRoutes from "./api/v1/routes/itemRoutes";
@@ -9,6 +22,7 @@ import express, {Express} from "express"
 
 // import setupSwagger endpoint
 import setupSwagger from "../config/swagger"; 
+
 import { error, timeStamp } from "console";
 import errorHandler from "./api/v1/middleware/errorHandler";
 //import userRoutes from "./src/api/v1/routes/userRoutes";
@@ -19,6 +33,21 @@ import adminRoutes from "./api/v1/routes/adminRoutes"
 
 // initialize the express application
 const app:  Express = express();
+
+// helmet
+app.use(helmet());
+
+// cors
+app.use(cors());
+
+// For more specific CORS configuration:
+/*
+app.use(cors({
+  origin: ['https://yourappdomain.com', 'https://admin.yourappdomain.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+*/
 
 // initialize morgan
 app.use(morgan("combined"));
