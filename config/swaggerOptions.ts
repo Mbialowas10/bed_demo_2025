@@ -1,12 +1,12 @@
 // import swagger ui middles, jsdoc-library
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
-import dotenv from  "dotenv";
+//import dotenv from  "dotenv";
 
 import {Express} from "express"
 
 // make sure environment variables are loaded
-dotenv.config();
+// dotenv.config();
 
 // get the server URL form environment variables or use a default
 const serverURL = process.env.SWAGGER_SERVER_URL || "http://localhost:3000/api/v1";

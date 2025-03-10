@@ -6,13 +6,15 @@
     "start": "ts-node src/server.ts",
     "build": "tsc",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output api-docs/index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@redocly/cli": "^1.33.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.5",
     "@types/supertest": "^6.0.2",

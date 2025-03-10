@@ -1,5 +1,11 @@
+// dot env
+import dotenv from "dotenv";
+
 // import morgan
 import morgan  from "morgan";
+
+// load the enviroment variables BEFORE your internal imports
+dotenv.config();
 
 // import itemRoutes
 import itemRoutes from "./api/v1/routes/itemRoutes";
