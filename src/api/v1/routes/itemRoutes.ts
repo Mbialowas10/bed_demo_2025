@@ -14,9 +14,44 @@ import { isAuthorized} from "../middleware/authorize"
 
 const router: Router = express.Router();
 
-
+/**
+ * @openapi
+ * /items:
+ *   get:
+ *     summary: Retrieve a list of items
+ *     tags: [Item]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Item'
+ */
 router.get("/", authenticate, getAllItems);
 
+/**
+ * @openapi
+ * /items:
+ *   post:
+ *     summary: Create a new item
+ *     tags: [Item]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Item'
+ *     responses:
+ *       201:
+ *         description: Item created
+ *       400:
+ *         description: Invalid input
+ */
 router.post(
 	"/", // /items 
 	authenticate,

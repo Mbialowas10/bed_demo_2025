@@ -20,6 +20,9 @@ import adminRoutes from "./api/v1/routes/adminRoutes"
 // initialize the express application
 const app:  Express = express();
 
+// setup swagger for api documentation
+setupSwagger(app);
+
 // initialize morgan
 app.use(morgan("combined"));
 
@@ -27,8 +30,8 @@ app.use(morgan("combined"));
 app.use(express.json());
 app.use(errorHandler)
 
-// setup swagger for api documentation
-setupSwagger(app)
+
+
 
 
 
